@@ -20,11 +20,16 @@ library(dplyr) # Permite leer la función %>%
  
 
 
-datos <-  saber_pro %>% select(CODMPIO,GENERO,PERIODO,LC,IN) %>% filter(CODMPIO==68001)
+datos <-  saber_pro %>% select(CODMPIO,GENERO,PERIODO,LC,IN) %>% filter(substring(saber_pro$CODMPIO,1,2)==68)
 datos
 
 #muestreo aleatorio simple
 library(samplingbook) # llamamos la librería
+# muestra aleatoria simple para los datos LC
+MAS <- sample.size.mean(e=0.5, S=sd(datos$LC), N = nrow(datos), level = 0.95)
 
-MAS <- 
+#muestra 
+muestra<- sample(datos$LC,size=MAS$n,replace=FALSE)
+
+muestra
 
