@@ -32,7 +32,7 @@ Estratos<- Pruebas %>%
   group_by(estu_valormatriculauniversidad) %>%
   summarise(n=n(),
             s=sd(mod_ingles_punt)) %>%
-  mutate(p=n/sum(n))
+  routn(p=n/sum(n))
 
 hrsTrabajo<- Pruebas %>%
   select(estu_horassemanatrabaja,mod_ingles_punt) %>%
