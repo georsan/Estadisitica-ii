@@ -82,11 +82,22 @@ multiplot(
  
 )
 
-ggplot(data = n_datos, aes(x = PERIODO)) + geom_bar()+ facet_wrap(~GENERO) + theme_test() +
+ggplot(data = n_datos, aes(x = PERIODO,y=LC)) + geom_bar(stat="identity") + theme_test() +
   theme(axis.title.x = element_text(size = 14),
         axis.text.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
         axis.text.y = element_text(size = 14),
         strip.text = element_text(size = 14),
         legend.position = 'none')
+
+multiplot(
+  ggplot(data = n_datos, aes(x = PERIODO, y = IN)) + geom_boxplot() + theme_test() +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),cols = 1
+  
+)
 
