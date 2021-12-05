@@ -71,18 +71,59 @@ options(repr.plot.width=16, repr.plot.height=8)
 install.packages('ggplot2')
 
 library(ggplot2)
-multiplot(
-  ggplot(data = n_datos, aes(x = PERIODO, y = LC)) + geom_boxplot() + theme_test() +
+
+  install.packages('psych')
+  library(psych)
+  
+  
+n_datos$LCR <- ifelse(n_datos$PERIODO == '2012' |
+                        n_datos$PERIODO == '2013' |
+                        n_datos$PERIODO == '2014' |
+                        n_datos$PERIODO == '2015',
+                      rescale(x = n_datos$LC, mean = 150, sd = 30, df = T)[,1],n_datos$LC
+                        )
+
+
+  
+  library(ggplot2)
+  #multiplot(
+  ggplot(data = n_datos, aes(x =(as.character(PERIODO)) , y = LCR)) + 
+    geom_boxplot() + theme_test() + labs(x="Periodo")+
     theme(axis.title.x = element_text(size = 14),
           axis.text.x = element_text(size = 14),
           axis.title.y = element_text(size = 14),
           axis.text.y = element_text(size = 14),
           strip.text = element_text(size = 14),
-          legend.position = 'none'),cols = 1
+          legend.position = 'none')
+  
+  #)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
  
-)
-
-ggplot(data = n_datos, aes(x = PERIODO,y=LC)) + geom_bar(stat="identity") + theme_test() +
+  PROM<-aggregate(LC~PERIODO,data=n_datos,FUN=mean)
+  
+  PROM$LCR <- ifelse(PROM$PERIODO == '2012' |
+                       PROM$PERIODO == '2013' |
+                       PROM$PERIODO == '2014' |
+                       PROM$PERIODO == '2015',
+                        rescale(x = PROM$LC, mean = 150, sd = 30, df = T)[,1],PROM$LC
+  )
+  
+ggplot(data = PROM, aes(x = (as.character(PERIODO)),y=LCR)) + geom_bar(stat="identity") + theme_test() +labs(x="Periodo")+
   theme(axis.title.x = element_text(size = 14),
         axis.text.x = element_text(size = 14),
         axis.title.y = element_text(size = 14),
@@ -90,14 +131,193 @@ ggplot(data = n_datos, aes(x = PERIODO,y=LC)) + geom_bar(stat="identity") + them
         strip.text = element_text(size = 14),
         legend.position = 'none')
 
+ggplot(data = n_datos, aes(x = LCR)) + geom_histogram(bins = 50) + facet_wrap(~GENERO) + theme_test() +
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        legend.position = 'none')
+
+
+n_datos1$INR <- ifelse(n_datos1$PERIODO == '2012' |
+                        n_datos1$PERIODO == '2013' |
+                        n_datos1$PERIODO == '2014' |
+                        n_datos1$PERIODO == '2015',
+                      rescale(x = n_datos1$IN, mean = 150, sd = 30, df = T)[,1],n_datos$IN
+)
+
+
+
+
+
+
+ggplot(data = n_datos1, aes(x =(as.character(PERIODO)) , y = INR)) + 
+  geom_boxplot() + theme_test() + labs(x="Periodo")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        legend.position = 'none')
+
+#)
+
+ggplot(data = PROM, aes(x = (as.character(PERIODO)),y=LCR)) + geom_bar(stat="identity") + theme_test() +labs(x="Periodo")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        legend.position = 'none')
+
+
+PROM1<-aggregate(IN~PERIODO,data=n_datos1,FUN=mean)
+
+PROM1$INR <- ifelse(PROM$PERIODO == '2012' |
+                     PROM$PERIODO == '2013' |
+                     PROM$PERIODO == '2014' |
+                     PROM$PERIODO == '2015',
+                   rescale(x = PROM1$IN, mean = 150, sd = 30, df = T)[,1],PROM1$IN
+)
+
+
+ggplot(data = PROM1, aes(x = (as.character(PERIODO)),y=INR)) + geom_bar(stat="identity") + theme_test() +labs(x="Periodo")+
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        legend.position = 'none')
+  
+  
+
+ggplot(data = n_datos1, aes(x = INR)) + geom_histogram(bins = 50) + facet_wrap(~GENERO) + theme_test() +
+  theme(axis.title.x = element_text(size = 14),
+        axis.text.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        axis.text.y = element_text(size = 14),
+        strip.text = element_text(size = 14),
+        legend.position = 'none')
+
+#Insesgamiento
+mues <- n_datos$LC
+
+n <- length(mues)
+varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
+#desviacion
+desvmedia <- sqrt(varmedia)
+
+B <- 1e+04
+media <- numeric(B)
+mediana <- numeric(B)
+for (k in 1:B) {
+  remuestra <- sample(mues, n, replace = TRUE)
+  media[k] <- mean(remuestra)
+  # remordenada <- sort(remuestra)
+  # mediana[k] <- remordenada[8]
+  mediana[k] <- median(remuestra)
+}
+sesgomediaboot <- mean(media) - mean(mues)
+sesgomedianaboot <- mean(mediana) - median(mues)
+
+muestra_1<- sample(1:nrow(n_datos),size=10,replace=FALSE)
+n_datos_1 <- n_datos[muestra_1,]
+
+muestra_2<- sample(1:nrow(n_datos),size=100,replace=FALSE)
+n_datos_2 <- n_datos[muestra_2,]
+
+muestra_3<- sample(1:nrow(n_datos),size=1000,replace=FALSE)
+n_datos_3 <- n_datos[muestra_3,]
+
 multiplot(
-  ggplot(data = n_datos, aes(x = PERIODO, y = IN)) + geom_boxplot() + theme_test() +
+  ggplot(data = n_datos, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
     theme(axis.title.x = element_text(size = 14),
           axis.text.x = element_text(size = 14),
           axis.title.y = element_text(size = 14),
           axis.text.y = element_text(size = 14),
           strip.text = element_text(size = 14),
-          legend.position = 'none'),cols = 1
-  
-)
+          legend.position = 'none'),
+  ggplot(data = n_datos_1, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  ggplot(data = n_datos_2, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  ggplot(data = n_datos_3, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  cols = 2)
 
+#Insesgamiento Ingles
+mues <- n_datos$IN
+
+n <- length(mues)
+varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
+#desviacion
+desvmedia <- sqrt(varmedia)
+
+B <- 1e+04
+media <- numeric(B)
+mediana <- numeric(B)
+for (k in 1:B) {
+  remuestra <- sample(mues, n, replace = TRUE)
+  media[k] <- mean(remuestra)
+  # remordenada <- sort(remuestra)
+  # mediana[k] <- remordenada[8]
+  mediana[k] <- median(remuestra)
+}
+sesgomediaboot <- mean(media) - mean(mues)
+sesgomedianaboot <- mean(mediana) - median(mues)
+
+muestra_1<- sample(1:nrow(n_datos1),size=10,replace=FALSE)
+n_datos_1 <- n_datos1[muestra_1,]
+
+muestra_2<- sample(1:nrow(n_datos1),size=100,replace=FALSE)
+n_datos_2 <- n_datos1[muestra_2,]
+
+muestra_3<- sample(1:nrow(n_datos1),size=1000,replace=FALSE)
+n_datos_3 <- n_datos1[muestra_3,]
+
+multiplot(
+  ggplot(data = n_datos1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  ggplot(data = n_datos_1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  ggplot(data = n_datos_2, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  ggplot(data = n_datos_3, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
+    theme(axis.title.x = element_text(size = 14),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          strip.text = element_text(size = 14),
+          legend.position = 'none'),
+  cols = 2)
