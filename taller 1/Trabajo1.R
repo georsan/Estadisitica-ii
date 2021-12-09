@@ -201,123 +201,194 @@ ggplot(data = n_datos1, aes(x = INR)) + geom_histogram(bins = 50) + facet_wrap(~
         legend.position = 'none')
 
 #Insesgamiento
-mues <- n_datos$LC
+#mues <- n_datos$LC
 
-n <- length(mues)
-varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
+#n <- length(mues)
+#varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
 #desviacion
-desvmedia <- sqrt(varmedia)
+#desvmedia <- sqrt(varmedia)
 
-B <- 1e+04
-media <- numeric(B)
-mediana <- numeric(B)
-for (k in 1:B) {
-  remuestra <- sample(mues, n, replace = TRUE)
-  media[k] <- mean(remuestra)
+#B <- 1e+04
+#media <- numeric(B)
+#mediana <- numeric(B)
+#for (k in 1:B) {
+#  remuestra <- sample(mues, n, replace = TRUE)
+ # media[k] <- mean(remuestra)
   # remordenada <- sort(remuestra)
   # mediana[k] <- remordenada[8]
-  mediana[k] <- median(remuestra)
-}
-sesgomediaboot <- mean(media) - mean(mues)
-sesgomedianaboot <- mean(mediana) - median(mues)
+  #mediana[k] <- median(remuestra)
+#}
+#sesgomediaboot <- mean(media) - mean(mues)
+#sesgomedianaboot <- mean(mediana) - median(mues)
 
-muestra_1<- sample(1:nrow(n_datos),size=10,replace=FALSE)
-n_datos_1 <- n_datos[muestra_1,]
+#muestra_1<- sample(1:nrow(n_datos),size=10,replace=FALSE)
+#n_datos_1 <- n_datos[muestra_1,]
 
-muestra_2<- sample(1:nrow(n_datos),size=100,replace=FALSE)
-n_datos_2 <- n_datos[muestra_2,]
+#muestra_2<- sample(1:nrow(n_datos),size=100,replace=FALSE)
+#n_datos_2 <- n_datos[muestra_2,]
 
-muestra_3<- sample(1:nrow(n_datos),size=1000,replace=FALSE)
-n_datos_3 <- n_datos[muestra_3,]
+#muestra_3<- sample(1:nrow(n_datos),size=1000,replace=FALSE)
+#n_datos_3 <- n_datos[muestra_3,]
 
-multiplot(
-  ggplot(data = n_datos, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_1, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_2, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_3, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  cols = 2)
+#multiplot(
+ # ggplot(data = n_datos, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_1, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_2, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_3, aes(x = LCR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  cols = 2)
 
 #Insesgamiento Ingles
-mues <- n_datos$IN
+#mues <- n_datos$IN
 
-n <- length(mues)
-varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
+#n <- length(mues)
+#varmedia <- (1/(n^2)) * sum((mues - mean(mues))^2)
 #desviacion
-desvmedia <- sqrt(varmedia)
+#desvmedia <- sqrt(varmedia)
 
-B <- 1e+04
-media <- numeric(B)
-mediana <- numeric(B)
-for (k in 1:B) {
-  remuestra <- sample(mues, n, replace = TRUE)
-  media[k] <- mean(remuestra)
+#B <- 1e+04
+#media <- numeric(B)
+#mediana <- numeric(B)
+#for (k in 1:B) {
+#  remuestra <- sample(mues, n, replace = TRUE)
+#  media[k] <- mean(remuestra)
   # remordenada <- sort(remuestra)
   # mediana[k] <- remordenada[8]
-  mediana[k] <- median(remuestra)
-}
-sesgomediaboot <- mean(media) - mean(mues)
-sesgomedianaboot <- mean(mediana) - median(mues)
+ # mediana[k] <- median(remuestra)
+#}
+#sesgomediaboot <- mean(media) - mean(mues)
+#sesgomedianaboot <- mean(mediana) - median(mues)
 
-muestra_1<- sample(1:nrow(n_datos1),size=10,replace=FALSE)
-n_datos_1 <- n_datos1[muestra_1,]
+#muestra_1<- sample(1:nrow(n_datos1),size=10,replace=FALSE)
+#n_datos_1 <- n_datos1[muestra_1,]
 
-muestra_2<- sample(1:nrow(n_datos1),size=100,replace=FALSE)
-n_datos_2 <- n_datos1[muestra_2,]
+#muestra_2<- sample(1:nrow(n_datos1),size=100,replace=FALSE)
+#n_datos_2 <- n_datos1[muestra_2,]
 
-muestra_3<- sample(1:nrow(n_datos1),size=1000,replace=FALSE)
-n_datos_3 <- n_datos1[muestra_3,]
+#muestra_3<- sample(1:nrow(n_datos1),size=1000,replace=FALSE)
+#n_datos_3 <- n_datos1[muestra_3,]
 
-multiplot(
-  ggplot(data = n_datos1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_2, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  ggplot(data = n_datos_3, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
-    theme(axis.title.x = element_text(size = 14),
-          axis.text.x = element_text(size = 14),
-          axis.title.y = element_text(size = 14),
-          axis.text.y = element_text(size = 14),
-          strip.text = element_text(size = 14),
-          legend.position = 'none'),
-  cols = 2)
+#multiplot(
+#  ggplot(data = n_datos1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('Población') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_1, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 10') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_2, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 100') +
+#    theme(axis.title.x = element_text(size = 14),
+#          axis.text.x = element_text(size = 14),
+#          axis.title.y = element_text(size = 14),
+#          axis.text.y = element_text(size = 14),
+#          strip.text = element_text(size = 14),
+#          legend.position = 'none'),
+#  ggplot(data = n_datos_3, aes(x = INR)) + geom_histogram(bins = 50) + theme_test() + ggtitle('n = 1000') +
+ #   theme(axis.title.x = element_text(size = 14),
+  #        axis.text.x = element_text(size = 14),
+  #        axis.title.y = element_text(size = 14),
+  #        axis.text.y = element_text(size = 14),
+  #        strip.text = element_text(size = 14),
+  #        legend.position = 'none'),
+  #cols = 2)
+  #
+##########################################################################
+#Intervalos de confianza
+##########################################################################
+#LC
+datos$LCR <- ifelse(datos$PERIODO == '2012' |
+                     datos$PERIODO == '2013' |
+                     datos$PERIODO == '2014' |
+                     datos$PERIODO == '2015',
+                   rescale(x = datos$LC, mean = 150, sd = 30, df = T)[,1],datos$LC
+)
+datos$INR <- ifelse(datos$PERIODO == '2012' |
+                      datos$PERIODO == '2013' |
+                      datos$PERIODO == '2014' |
+                      datos$PERIODO == '2015',
+                    rescale(x = datos$IN, mean = 150, sd = 30, df = T)[,1],datos$IN
+)
+# Media Poblacional
+Media_poblacional_LC=round(mean(datos$LCR),5)
+#media muestral
+Media_muestral_LC=round(mean(n_datos$LCR),5)
+#varianza
+Np<-nrow(datos)
+varianzaP<-round(var(datos$LCR)*((Np-1)/Np),5)
+#varianza muestral
+varianzaM=round(var(n_datos$LCR),5)
+
+#descacion estandar
+desviacionE=round(sd(n_datos$LCR),5)
+
+datafLC<-data.frame("MEDIA POBLACIONAL"=Media_poblacional_LC,"MEDIA MUESTRAL"=Media_muestral_LC,"VARIANZA POBLACIONAL"=varianzaP,"VARIANZA MUESTRAL"=varianzaM,"DESVIACION ESTANDAR"=desviacionE)
+
+##########################IN
+# Media Poblacional
+Media_poblacional_IN=round(mean(datos$INR),5)
+#media muestral
+Media_muestral_IN=round(mean(n_datos1$INR),5)
+#varianza
+Np<-nrow(datos)
+varianzaP1<-round(var(datos$INR)*((Np-1)/Np),5)
+#varianza muestral
+varianzaIN=round(var(n_datos1$INR),5)
+
+#descacion estandar
+desviacionEIN=round(sd(n_datos1$INR),5)
+
+
+datafIN<-data.frame("MEDIA POBLACIONAL"=Media_poblacional_IN,"MEDIA MUESTRAL"=Media_muestral_IN,"VARIANZA POBLACIONAL"=varianzaP1,"VARIANZA MUESTRAL"=varianzaIN,"DESVIACION ESTANDAR"=desviacionEIN)
+
+
+#Intervalo de confianza lc
+media <- mean(na.omit(n_datos$LCR)) # Pedimos la media
+desv <- sd(na.omit(n_datos$LCR)) # La desviación estándar
+N <- length(na.omit(n_datos$LCR)) # El tamaño válido de la muestra
+error.est <- desv/sqrt(N) # Calculamos el error estándar
+error <- 2.57*error.est # Fijamos Z=2.57 para indicar un nivel de confianza de 99%
+lim.inf <- media-error # Límite inferior del intervalo
+lim.sup <- media+error # Límite superior del intervalo
+resultado1 <- data.frame(media, desv, N, error.est, error, lim.inf, lim.sup)
+round(resultado1,1)
+
+#Intervalo de confianza RC
+media <- mean(na.omit(n_datos1$INR)) # Pedimos la media
+desv <- sd(na.omit(n_datos1$INR)) # La desviación estándar
+N <- length(na.omit(n_datos1$INR)) # El tamaño válido de la muestra
+error.est <- desv/sqrt(N) # Calculamos el error estándar
+error <- 2.57*error.est # Fijamos Z=2.57 para indicar un nivel de confianza de 99%
+lim.inf <- media-error # Límite inferior del intervalo
+lim.sup <- media+error # Límite superior del intervalo
+resultado1 <- data.frame(media, desv, N, error.est, error, lim.inf, lim.sup)
+round(resultado1,1)
